@@ -1,0 +1,53 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+    <link rel="stylesheet" href="{% static 'css/login_register.css' %}">
+    <script src="{% static 'js/script.js' %}"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+</head>
+
+<body>
+    <div class="top-bar">
+        <div>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'login' %}">Login</a>
+            <a href="#" class="active">Register</a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'logout' %}">Logout</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="container">
+        <div class="card-container">
+            <h2>Register</h2>
+            <form action="{% url 'register' %}" method="post">
+                {% csrf_token %}
+                {% if form.errors %}
+                {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                <div class="popup-card error">
+                    <img src="{% static 'images/warning_logo.png' %}" alt="Warning logo">
+                    <span class="popup-close" onclick="closePopup(this)">×</span>
+                    <p class="popup-message">{{ error }}</p>
+                </div>
+                {% endfor %}
+                {% endfor %}
+                {% endif %}
+                <input type="text" name="username" placeholder="Username - 150 chars or fewer" required>
+                <input type="password" name="password1" placeholder="Password - at least 8 characters" required>
+                <input type="password" name="password2" placeholder="Confirm Password" required>
+                <input type="submit" value="Register">
+            </form>
+            <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+        </div>
+    </div>
+</body>
+
+</html>

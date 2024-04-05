@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Data</title>
+    <link rel="stylesheet" href="{% static 'css/fetch.css' %}">
+    <script src="{% static 'js/script.js' %}"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+</head>
+<body>
+    <div class="top-bar">
+        <div>
+            <a href="{% url 'home' %}" >Home</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+                <a href="{% url 'logout' %}">Logout</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="container">
+        <div class="upload-container">
+            <h2>Your Uploads</h2>
+            <img src="{% static "images/search_logo.png" %}" alt="Secure Lock Image" style="padding:20px;width:150px;">
+            <!-- Display a list of uploaded files -->
+            {% for upload in user_uploads %}
+            <div class="file-card">
+                <div class="file-info">
+                    <h3 class="file-name">{{ upload.filename }}</h3>
+                    <p>Uploaded on: {{ upload.upload_date }}</p>
+                </div>
+                <form action="{% url 'fetch_file' file_id=upload.id_str %}" method="get">
+                    {% csrf_token %}
+                    <input type="hidden" name="file_id" value="{{ upload.id_str }}">
+                    <input class="fetch-button" type="submit" value="Fetch">
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

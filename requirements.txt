@@ -1,0 +1,27 @@
+# The Dependencies for Machine Learning
+
+scikit-learn
+pandas
+numpy
+matplotlib
+
+# The Dependencies for Cryptography
+
+pycryptodome
+pycryptodomex
+
+# The Dependencies for Database
+
+pymongo
+
+# The Dependencies for Web
+
+django
+
+#cloud
+azure.cosmos
+json 
+uuid
+
+
+# Type this command in terminal : pip install -r requirements.txt
